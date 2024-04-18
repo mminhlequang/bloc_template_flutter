@@ -3,30 +3,26 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:temp_package_name/src/utils/utils.dart';
-part 'auth_event.dart';
+
 part 'auth_state.dart';
 
 enum AuthStateType { none, logged }
 
-AuthBloc get authBloc => findInstance<AuthBloc>();
+AuthCubit get authCubit => findInstance<AuthCubit>();
 
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
+class AuthCubit extends Cubit<AuthState> {
   StreamSubscription? _subscription;
 
-  AuthBloc() : super(AuthState()) {
-    on<LoadAuthEvent>(_load);
-    on<LogoutAuthEvent>(_logout);
-    on<UpdateUserAuthEvent>(_update);
+  AuthCubit() : super(AuthState());
+  update(user) async {
+    state.user = user;
+    emit(state.update());
+    // if (state.user == null) {
+    //   add(LogoutAuthEvent());
+    // }
   }
 
-  _update(UpdateUserAuthEvent event, Emitter<AuthState> emit) async {
-    state.user = event.user;
-    if (state.user == null) {
-      add(LogoutAuthEvent());
-    }
-  }
-
-  _load(LoadAuthEvent event, Emitter<AuthState> emit) async {
+  load({Duration delayRedirect = const Duration(seconds: 1)}) async {
     try {
       emit(state.update(stateType: AuthStateType.logged));
     } catch (e) {
@@ -41,11 +37,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // });
     }
 
-    await Future.delayed(event.delay);
+    await Future.delayed(delayRedirect);
     _redirect();
   }
 
-  _logout(LogoutAuthEvent event, Emitter<AuthState> emit) async {
+  logout() async {
     _subscription?.cancel();
     try {
       emit(state.update(stateType: AuthStateType.none));

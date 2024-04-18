@@ -6,8 +6,11 @@ import '../base/bloc.dart';
 
 final getIt = GetIt.instance;
 
+/// Register which one need be install when app start and keep alive into end
+/// other bloc/cubit must be register in [GoRouter]
+
 void getItSetup() {
   getIt.registerSingleton<GlobalKey<NavigatorState>>(
       GlobalKey<NavigatorState>());
-  getIt.registerSingleton<AuthBloc>(AuthBloc()); 
+  getIt.registerSingleton<AuthCubit>(AuthCubit()); 
 }

@@ -54,7 +54,7 @@ void main() async {
 }
 
 class _App extends StatefulWidget {
-  const _App({Key? key}) : super(key: key);
+  const _App({super.key});
 
   @override
   _AppState createState() => _AppState();
@@ -64,7 +64,7 @@ class _AppState extends State<_App> {
   @override
   void initState() {
     super.initState();
-    authBloc.add(const LoadAuthEvent());
+    authCubit.load();
   }
 
   GlobalKey key = GlobalKey();
