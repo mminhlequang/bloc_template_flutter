@@ -17,7 +17,7 @@ class AppColors extends AppColorsBase {
   Color get background => byTheme(Colors.white, kdark: Colors.black);
 
   @override
-  Color get element => byTheme(Colors.grey[200]!, kdark: Colors.grey[200]!);
+  Color get element => byTheme(Colors.grey[200]!, kdark: hexColor('#161618'));
 
   @override
   Color get primary => byTheme(hexColor('00BDF9'));

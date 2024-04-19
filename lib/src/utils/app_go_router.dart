@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:temp_package_name/src/presentation/dashboard/cubit/dashboard_cubit.dart';
 import 'package:temp_package_name/src/presentation/home/cubit/home_cubit.dart';
 
+import '../presentation/dashboard/dashboard_screen.dart';
 import '../presentation/home/home_screen.dart';
-import '../presentation/page1/bloc/page1_bloc.dart';
-import '../presentation/page1/page1_screen.dart';
-import '../presentation/page2/page2_screen.dart';
+import '../presentation/subjects/cubit/subjects_cubit.dart';
+import '../presentation/subjects/subjects_screen.dart';
 import 'app_get.dart';
 
 GlobalKey<NavigatorState> get appNavigatorKey =>
@@ -16,30 +17,39 @@ BuildContext get appContext => appNavigatorKey.currentContext!;
 
 // GoRouter configuration
 final goRouter = GoRouter(
+  initialLocation: '/dashboard/home',
   navigatorKey: appNavigatorKey,
   routes: [
-    GoRoute(
-      name: '/',
-      path: '/',
-      /// Example register new [bloc] using at [homescreen]
-      builder: (context, state) => BlocProvider(
-        create: (context) => HomeCubit(),
-        child: const HomeScreen(),
-      ),
+    ShellRoute(
+      pageBuilder: (context, state, child) {
+        /// Example register new [bloc] using at [DashboardScreen]
+        return NoTransitionPage(
+          child: BlocProvider(
+            create: (context) => DashboardCubit(),
+            child: DashboardScreenWrap(
+              child: child,
+            ),
+          ),
+        );
+      },
       routes: [
         GoRoute(
-          name: 'page1',
-          path: 'page1',
-          /// Example register new [bloc] using at [Page1Screen]
+          name: '/dashboard/home',
+          path: '/dashboard/home',
+
+          /// Example register new [bloc] using at [HomeScreen]
           builder: (context, state) => BlocProvider(
-            create: (context) => Page1Bloc(),
-            child: const Page1Screen(),
+            create: (context) => HomeCubit(),
+            child: const HomeScreen(),
           ),
         ),
         GoRoute(
-          name: 'page2',
-          path: 'page2',
-          builder: (context, state) => const Page2Screen(),
+          name: '/dashboard/subjects',
+          path: '/dashboard/subjects',
+          builder: (context, state) => BlocProvider(
+            create: (context) => SubjectsCubit(),
+            child: const SubjectsScreen(),
+          ),
         ),
       ],
     ),

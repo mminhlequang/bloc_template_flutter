@@ -3,13 +3,12 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 import 'utils.dart';
-// import 'dart:html' as html;
+import 'dart:html' as html;
 
-// setFriendlyRouteName({required String title, required String url}) {
-//   html.document.title = title;
-//   html.window.history.pushState(null, title, url);
-// }
-
+setFriendlyRouteName({required String title, required String url}) {
+  html.document.title = title;
+  html.window.history.pushState(null, title, url);
+}
 
 bool appIsBottomSheetOpen = false;
 appOpenBottomSheet(
@@ -65,9 +64,7 @@ hideKeyboard() {
 }
 
 appChangedTheme() {
-  AppPrefs.instance.themeModel = AppPrefs.instance.isDarkTheme
-      ? AppPrefsBase.themeModeLightKey
-      : AppPrefsBase.themeModeDarkKey;
+  AppPrefs.instance.isDarkTheme = !AppPrefs.instance.isDarkTheme;
   WidgetsFlutterBinding.ensureInitialized().performReassemble();
 }
 

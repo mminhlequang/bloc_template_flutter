@@ -1,10 +1,17 @@
+import 'package:_iwu_pack/setup/index.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:gap/gap.dart';
 import 'package:_iwu_pack/_iwu_pack.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart'; 
+import 'package:go_router/go_router.dart';
+import 'package:temp_package_name/src/constants/constants.dart';
 import 'package:temp_package_name/src/utils/utils.dart';
+
+import '../dashboard/cubit/dashboard_cubit.dart';
+import '../dashboard/dashboard_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,111 +28,138 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: appColorBackground,
-      body: Column(
+    return Padding(
+      padding:
+          EdgeInsets.symmetric(horizontal: dashboardScreenWrapHorizPadding),
+      child: Column(
         children: [
-          const Gap(32),
+          const Gap(16),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Gap(32),
-              WidgetAppSVG(
-                'flutter',
-                width: 32,
-                color: appColorText,
-              ),
-              const Gap(20),
               Expanded(
-                child: Text(
-                  AppPrefs.instance.isDarkTheme
-                      ? 'DEMO isDarkMode'
-                      : 'DEMO isNotDarkMode',
-                  style: w600TextStyle(fontSize: 22),
-                ),
-              ),
-              const Gap(16),
-              WidgetRippleButton(
-                onTap: () {
-                  context.push('/page1');
-                },
-                color: appColorText,
-                borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 32),
-                  child: Text(
-                    'Next page',
-                    style: w400TextStyle(color: appColorBackground),
-                  ),
-                ),
-              ),
-              const Gap(32),
-            ],
-          ),
-          const Gap(20),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(32.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'meow'.tr(),
-                      style: w400TextStyle(height: 1.6),
+                      'Hello, Admin',
+                      style: w600TextStyle(fontSize: 20.sw),
                     ),
-                    const Gap(20),
-                    Row(
-                      children: appSupportedLocales
-                          .map((e) => Padding(
-                                padding: const EdgeInsets.only(right: 16),
-                                child: WidgetRippleButton(
-                                  onTap: () {
-                                    appContext.setLocale(e);
-                                  },
-                                  color: appColorText,
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 32),
-                                    child: Text(
-                                      e.languageCode,
-                                      style: w400TextStyle(
-                                          color: appColorBackground),
-                                    ),
-                                  ),
-                                ),
-                              ))
-                          .toList(),
+                    const Gap(4),
+                    Text(
+                      'This is what we\'ve got for you today',
+                      style: w400TextStyle(
+                          fontSize: 14.sw, color: appColorText.withOpacity(.8)),
                     ),
                   ],
                 ),
               ),
-            ),
-          ),
-          Row(
-            children: [
-              const Spacer(),
-              FlutterSwitch(
-                width: 125.0,
-                height: 55.0,
-                valueFontSize: 25.0,
-                toggleSize: 45.0,
-                value: AppPrefs.instance.isDarkTheme,
-                borderRadius: 30.0,
-                padding: 8.0,
-                showOnOff: true,
-                activeText: "Dark",
-                inactiveText: "Light",
-                onToggle: (val) {
-                  appChangedTheme();
-                },
-              ),
-              const Gap(32),
             ],
           ),
-          const Gap(32),
+          const Gap(40),
+          Row(
+            children: [
+              WidgetRippleButton(
+                onTap: () {
+                  context
+                      .read<DashboardCubit>()
+                      .changeMenu(DashboardMenu.subjects);
+                },
+                color: appColorBackground,
+                borderRadius: BorderRadius.circular(16.sw),
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 24.sw, horizontal: 40.sw),
+                  decoration: BoxDecoration(
+                      color: appColorBackground,
+                      borderRadius: BorderRadius.circular(16.sw),
+                      boxShadow: [
+                        BoxShadow(
+                            color: appColorText.withOpacity(.12),
+                            blurRadius: 16)
+                      ]),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.margin_rounded,
+                              color: appColorText.withOpacity(.65)),
+                          Gap(20.sw),
+                          Text(
+                            'Total departments',
+                            style: w400TextStyle(
+                                fontSize: 20.sw,
+                                color: appColorText.withOpacity(.65)),
+                          ),
+                        ],
+                      ),
+                      Gap(8.sw),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '20',
+                            style: w700TextStyle(fontSize: 48.sw),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const Gap(32),
+              WidgetRippleButton(
+                onTap: () {
+                  context
+                      .read<DashboardCubit>()
+                      .changeMenu(DashboardMenu.subjects);
+                },
+                color: appColorBackground,
+                borderRadius: BorderRadius.circular(16.sw),
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 24.sw, horizontal: 40.sw),
+                  decoration: BoxDecoration(
+                      color: appColorBackground,
+                      borderRadius: BorderRadius.circular(16.sw),
+                      boxShadow: [
+                        BoxShadow(
+                            color: appColorText.withOpacity(.12),
+                            blurRadius: 16)
+                      ]),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.auto_fix_normal_sharp,
+                              color: appColorText.withOpacity(.65)),
+                          Gap(20.sw),
+                          Text(
+                            'Total Subjects',
+                            style: w400TextStyle(
+                                fontSize: 20.sw,
+                                color: appColorText.withOpacity(.65)),
+                          ),
+                        ],
+                      ),
+                      Gap(8.sw),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '90',
+                            style: w700TextStyle(fontSize: 48.sw),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

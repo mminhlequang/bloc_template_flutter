@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
+import 'package:go_router/go_router.dart';
+import 'package:temp_package_name/firebase_options.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
@@ -16,15 +19,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     setPathUrlStrategy();
+    GoRouter.optionURLReflectsImperativeAPIs = true;
   }
 
   await Future.wait([
-    // if (kIsWeb)
-    //   Firebase.initializeApp(
-    //     options: firebaseOptionsPREPROD,
-    //   )
-    // else if (!Platform.isWindows)
-    //   Firebase.initializeApp(),
+    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
     if (!kIsWeb) ...[
       if (Platform.isAndroid)
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
@@ -67,7 +66,6 @@ class _AppState extends State<_App> {
     authCubit.load();
   }
 
-  GlobalKey key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Portal(

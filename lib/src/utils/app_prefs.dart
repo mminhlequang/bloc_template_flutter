@@ -49,13 +49,9 @@ class AppPrefs extends AppPrefsBase {
     ]);
   }
 
-  bool get isDarkTheme =>
-      AppPrefs.instance.themeModel == AppPrefsBase.themeModeDarkKey;
+  set isDarkTheme(bool? value) => _boxData.put('isDarkTheme', value);
 
-  set themeModel(String? value) =>
-      _boxData.put(AppPrefsBase.themeModeKey, value);
-
-  String? get themeModel => _boxData.get(AppPrefsBase.themeModeKey);
+  bool get isDarkTheme => _boxData.get('isDarkTheme') ?? false;
 
   @override
   set languageCode(String? value) =>

@@ -15,7 +15,7 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="BLoC with GetX boilerplate flutter">
+  <meta name="description" content="temp_package_description">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,19 +32,28 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+  
+  <!-- Add this line -->
+  <script>window.flutterfire_web_sdk_version = '10.10.0';</script>
 
 </head>
 <body>
   <script>
     window.addEventListener('load', function(ev) {
+      // navigator.serviceWorker.register('./src/firebase-messaging-sw.js');
       // Download main.dart.js
+      // window.location.origin 
       _flutter.loader.loadEntrypoint({
-        entrypointUrl : "main.dart.js?v=0.0.1",
+        entrypointUrl: window.location.origin + "/main.dart.js?v=" + serviceWorkerVersion,
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
-        }
+          serviceWorkerUrl:  "/flutter_service_worker.js?v=",
+          timeoutMillis: 15000
+        },
       }).then(function(engineInitializer) {
-        return engineInitializer.initializeEngine();
+        return engineInitializer.initializeEngine({
+          useColorEmoji: true,
+        });
       }).then(function(appRunner) {
         return appRunner.runApp();
       });
