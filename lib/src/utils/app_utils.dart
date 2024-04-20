@@ -96,3 +96,5 @@ bool isImageByMime(type) {
       return false;
   }
 }
+
+int get timestampId => DateTime.now().millisecondsSinceEpoch ~/ 1000; 

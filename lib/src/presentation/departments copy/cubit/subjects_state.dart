@@ -1,6 +1,5 @@
 part of 'subjects_cubit.dart';
 
-
 class SubjectsState {
   int count;
   int countWithFilter;
@@ -9,14 +8,14 @@ class SubjectsState {
   List<QueryDocumentSnapshot<Map>>? items;
 
   bool isForKid;
-  bool isPublic;
+  bool isEnable;
 
   List<QueryDocumentSnapshot<Map>>? itemsLangs;
   Map? language;
 
   SubjectsState({
     this.isForKid = true,
-    this.isPublic = true,
+    this.isEnable = true,
     this.count = 0,
     this.countWithFilter = 0,
     this.page = 1,
@@ -28,7 +27,7 @@ class SubjectsState {
 
   SubjectsState update({
     bool? isForKid,
-    bool? isPublic,
+    bool? isEnable,
     int? count,
     int? countWithFilter,
     int? page,
@@ -39,7 +38,7 @@ class SubjectsState {
   }) {
     return SubjectsState(
       isForKid: isForKid ?? this.isForKid,
-      isPublic: isPublic ?? this.isPublic,
+      isEnable: isEnable ?? this.isEnable,
       count: count ?? this.count,
       countWithFilter: countWithFilter ?? this.countWithFilter,
       page: page ?? this.page,

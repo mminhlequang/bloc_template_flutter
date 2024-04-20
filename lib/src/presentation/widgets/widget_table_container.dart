@@ -19,35 +19,28 @@ class WidgetTableContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              border: Border.all(color: appColorElement),
-              borderRadius: BorderRadius.circular(16.sw),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16.sw),
-              child: Stack(
-                children: [
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 42.sw),
-                      child: data,
-                    ),
-                  ),
-                  WidgetRowHeader(
-                    child: header,
-                  ),
-                ],
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        border: Border.all(color: appColorElement),
+        borderRadius: BorderRadius.circular(16.sw),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16.sw),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(top: 42.sw),
+                child: data,
               ),
             ),
-          ),
+            WidgetRowHeader(
+              child: header,
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -99,7 +92,9 @@ class WidgetRowItem extends StatelessWidget {
           decoration: BoxDecoration(
               color: isHover && onTap != null
                   ? appColorText.withOpacity(.45)
-                  : appColorElement,
+                  : index % 2 != 0
+                      ? appColorBackground
+                      : appColorElement,
               border: Border.all(width: 0.4, color: appColorBackground)),
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           child: onTap != null

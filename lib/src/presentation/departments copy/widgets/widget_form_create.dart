@@ -38,7 +38,7 @@
 //   }
 
 //   _submit(Map<String, dynamic> data) async {
-//     var id = DateTime.now().millisecondsSinceEpoch;
+//     var id = timestampId;
 //     data.addAll({kdbid: id});
 //     await colSubjects.doc('$id').set(data);
 //     findInstance<QuizsBloc>().needRefresh();

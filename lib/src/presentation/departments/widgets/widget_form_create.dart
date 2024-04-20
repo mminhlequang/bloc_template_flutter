@@ -1,185 +1,127 @@
-// import 'dart:convert';
+import 'dart:convert';
 
-// import 'package:_iwu_pack/_iwu_pack.dart';
-// import 'package:flutter/material.dart';
-// import 'package:gap/gap.dart';
-// import 'package:go_router/go_router.dart';
-// import 'package:quizzes/src/utils/utils.dart';
-// import 'package:quizzes/src/firestore_resources/firestore_resources.dart';
-// import 'package:quizzes/src/presentation/quizs/bloc/quizs_bloc.dart';
-// import 'package:quizzes/src/presentation/widgets/widget_button.dart';
-// import 'package:quizzes/src/presentation/widgets/widget_check.dart';
-// import 'package:quizzes/src/presentation/widgets/widget_textfield.dart';
+import 'package:_iwu_pack/_iwu_pack.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:temp_package_name/src/presentation/widgets/widget_dialog_container.dart';
+import 'package:temp_package_name/src/presentation/widgets/widgets.dart';
+import 'package:temp_package_name/src/resources/firestore/firestore.dart';
+import 'package:temp_package_name/src/utils/utils.dart';
 
-// import '../bloc/subjects_bloc.dart';
+import '../cubit/departments_cubit.dart';
 
-// SubjectsBloc get _bloc => findInstance<SubjectsBloc>();
+class WidgetFormCreateDepartment extends StatefulWidget {
+  const WidgetFormCreateDepartment({super.key});
 
-// class WidgetFormCreateSubjects extends StatefulWidget {
-//   const WidgetFormCreateSubjects({super.key});
+  @override
+  State<WidgetFormCreateDepartment> createState() =>
+      _WidgetFormCreateDepartmentState();
+}
 
-//   @override
-//   State<WidgetFormCreateSubjects> createState() =>
-//       _WidgetFormCreateSubjectsState();
-// }
+class _WidgetFormCreateDepartmentState
+    extends State<WidgetFormCreateDepartment> {
+  final TextEditingController labelController = TextEditingController();
+  bool isSetPublic = true;
+  bool loading = false;
 
-// class _WidgetFormCreateSubjectsState extends State<WidgetFormCreateSubjects> {
-//   final TextEditingController json = TextEditingController();
-//   final TextEditingController title = TextEditingController();
-//   final TextEditingController code = TextEditingController();
-//   bool isSetPublic = true;
-//   bool isEnableJson = true;
-//   bool get isJson {
-//     var r;
-//     try {
-//       if (json.text.isNotEmpty) r = jsonDecode(json.text.trim());
-//     } catch (e) {}
-//     return r != null;
-//   }
+  _submit() async {
+    setState(() {
+      loading = true;
+    });
+    var id = timestampId;
+    Map<String, dynamic> data = {
+      kdbid: id,
+      kdblabel: labelController.text.trim(),
+      kdbisEnable: isSetPublic,
+    };
+    loading = false;
+    await colDepartments.doc('$id').set(data);
+    if (mounted) {
+      context.read<DepartmentsCubit>().fetch();
+      context.pop();
+    }
+  }
 
-//   _submit(Map<String, dynamic> data) async {
-//     var id = DateTime.now().millisecondsSinceEpoch;
-//     data.addAll({kdbid: id});
-//     await colSubjects.doc('$id').set(data);
-//     findInstance<QuizsBloc>().needRefresh();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () {
-//         context.pop();
-//       },
-//       child: Material(
-//         color: Colors.black26,
-//         child: Center(
-//           child: Hero(
-//             tag: 'WidgetFormCreateSubjects',
-//             child: Material(
-//               color: Colors.transparent,
-//               child: GestureDetector(
-//                 onTap: () {},
-//                 child: Container(
-//                   margin: const EdgeInsets.all(24),
-//                   padding: const EdgeInsets.all(32),
-//                   width: 600,
-//                   decoration: BoxDecoration(
-//                       color: appColorBackground,
-//                       borderRadius: BorderRadius.circular(26)),
-//                   child: SingleChildScrollView(
-//                     child: AnimatedSize(
-//                       duration: const Duration(milliseconds: 300),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         mainAxisSize: MainAxisSize.min,
-//                         children: [
-//                           Text(
-//                             "Subjects",
-//                             style: w600TextStyle(fontSize: 28),
-//                           ),
-//                           const Gap(8),
-//                           Row(
-//                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                             children: [
-//                               Text(
-//                                 "New item",
-//                                 style: w400TextStyle(
-//                                   fontSize: 18,
-//                                   color: Colors.grey,
-//                                 ),
-//                               ),
-//                               IconButton(
-//                                   onPressed: () {
-//                                     setState(() {
-//                                       isEnableJson = !isEnableJson;
-//                                     });
-//                                   },
-//                                   icon: WidgetAppSVG(
-//                                     assetsvg('json'),
-//                                     width: 24,
-//                                   )),
-//                             ],
-//                           ),
-//                           const Gap(24),
-//                           if (isEnableJson) ...[
-//                             WidgetTextField(
-//                               controller: json,
-//                               label: 'Json format',
-//                               maxLines: 15,
-//                               onChanged: (value) {
-//                                 setState(() {});
-//                               },
-//                             ),
-//                           ] else ...[
-//                             Row(
-//                               children: [
-//                                 Expanded(
-//                                     flex: 4,
-//                                     child: WidgetTextField(
-//                                       controller: title,
-//                                       label: 'Display name',
-//                                       onChanged: (value) {
-//                                         setState(() {});
-//                                       },
-//                                     )),
-//                                 const Gap(16),
-//                                 Expanded(
-//                                   flex: 1,
-//                                   child: WidgetTextField(
-//                                     controller: code,
-//                                     label: 'Language code',
-//                                     onChanged: (value) {
-//                                       setState(() {});
-//                                     },
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                             const Gap(16),
-//                             WidgetCheck(
-//                               status: isSetPublic,
-//                               label: 'Set to public',
-//                               callback: (value) {
-//                                 setState(() {
-//                                   isSetPublic = !isSetPublic;
-//                                 });
-//                               },
-//                             )
-//                           ],
-//                           const Gap(24),
-//                           WidgetButton(
-//                             enable: isEnableJson
-//                                 ? isJson
-//                                 : title.text.isNotEmpty && code.text.isNotEmpty,
-//                             label: 'Submit',
-//                             onTap: () async {
-//                               context.pop();
-//                               if (isEnableJson) {
-//                                 List datas =
-//                                     jsonDecode(json.text.trim()) as List;
-//                                 for (var e in datas) {
-//                                   await _submit(Map<String, dynamic>.from(e));
-//                                 }
-//                               } else {
-//                                 await _submit({
-//                                   kdblanguageName: title.text.trim(),
-//                                   kdblanguageCode: code.text.trim(),
-//                                   kdbisEnable: isSetPublic,
-//                                 });
-//                               }
-//                               _bloc.add(const FetchSubjectsEvent(page: 1));
-//                             },
-//                           )
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return WidgetDialogContainer(
+      heroTag: "WidgetFormCreateDepartment",
+      child: SingleChildScrollView(
+        child: AnimatedSize(
+          duration: const Duration(milliseconds: 300),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Departments",
+                style: w600TextStyle(fontSize: 28),
+              ),
+              const Gap(8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Add new item",
+                    style: w400TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+              const Gap(24),
+              ...[
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 4,
+                        child: WidgetTextField(
+                          controller: labelController,
+                          label: 'Label',
+                          onChanged: (value) {
+                            setState(() {});
+                          },
+                        )),
+                    // const Gap(16),
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: WidgetTextField(
+                    //     controller: code,
+                    //     label: 'Language code',
+                    //     onChanged: (value) {
+                    //       setState(() {});
+                    //     },
+                    //   ),
+                    // ),
+                  ],
+                ),
+                const Gap(16),
+                WidgetCheck(
+                  status: isSetPublic,
+                  label: 'Set to enable',
+                  callback: (value) {
+                    setState(() {
+                      isSetPublic = !isSetPublic;
+                    });
+                  },
+                )
+              ],
+              const Gap(24),
+              WidgetButton(
+                enable: labelController.text.isNotEmpty,
+                label: 'Submit',
+                onTap: () async {
+                  context.pop();
+                  await _submit();
+                },
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -16,17 +16,14 @@ class SubjectsCubit extends Cubit<SubjectsState> {
     if (state.items == null || state.items!.isEmpty || state.page == 1) {
       if (state.isForKid) {
         var query = await colSubjects
-            .where(kdbisForKid, isEqualTo: state.isForKid)
-            .where(kdbisEnable, isEqualTo: state.isPublic)
-            .where(kdblanguageCode, isEqualTo: state.language![kdblanguageCode])
+            .where(kdbisEnable, isEqualTo: state.isEnable)
             .limit(state.limit)
             .get();
         emit(state.update(
             items: query.docs as List<QueryDocumentSnapshot<Map>>));
       } else {
         var query = await colSubjects
-            .where(kdbisEnable, isEqualTo: state.isPublic)
-            .where(kdblanguageCode, isEqualTo: state.language![kdblanguageCode])
+            .where(kdbisEnable, isEqualTo: state.isEnable)
             .limit(state.limit)
             .get();
         emit(state.update(
@@ -37,9 +34,7 @@ class SubjectsCubit extends Cubit<SubjectsState> {
       emit(state.update(items: []));
       if (state.isForKid) {
         var query = await colSubjects
-            .where(kdbisForKid, isEqualTo: state.isForKid)
-            .where(kdbisEnable, isEqualTo: state.isPublic)
-            .where(kdblanguageCode, isEqualTo: state.language![kdblanguageCode])
+            .where(kdbisEnable, isEqualTo: state.isEnable)
             .startAfterDocument(last)
             .limit(state.limit)
             .get();
@@ -47,8 +42,7 @@ class SubjectsCubit extends Cubit<SubjectsState> {
             items: query.docs as List<QueryDocumentSnapshot<Map>>));
       } else {
         var query = await colSubjects
-            .where(kdbisEnable, isEqualTo: state.isPublic)
-            .where(kdblanguageCode, isEqualTo: state.language![kdblanguageCode])
+            .where(kdbisEnable, isEqualTo: state.isEnable)
             .startAfterDocument(last)
             .limit(state.limit)
             .get();
@@ -61,17 +55,14 @@ class SubjectsCubit extends Cubit<SubjectsState> {
     var count = querycount.count;
     if (state.isForKid) {
       AggregateQuerySnapshot querycountWithFilter = await colSubjects
-          .where(kdbisForKid, isEqualTo: state.isForKid)
-          .where(kdbisEnable, isEqualTo: state.isPublic)
-          .where(kdblanguageCode, isEqualTo: state.language![kdblanguageCode])
+          .where(kdbisEnable, isEqualTo: state.isEnable)
           .count()
           .get();
       var countWithFilter = querycountWithFilter.count;
       emit(state.update(count: count, countWithFilter: countWithFilter));
     } else {
       AggregateQuerySnapshot querycountWithFilter = await colSubjects
-          .where(kdbisEnable, isEqualTo: state.isPublic)
-          .where(kdblanguageCode, isEqualTo: state.language![kdblanguageCode])
+          .where(kdbisEnable, isEqualTo: state.isEnable)
           .count()
           .get();
       var countWithFilter = querycountWithFilter.count;
@@ -81,7 +72,7 @@ class SubjectsCubit extends Cubit<SubjectsState> {
 
   init() async {
     if (state.itemsLangs != null && state.itemsLangs!.isNotEmpty) return;
-    var query = await colLangs.get();
+    var query = await colDepartments.get();
     emit(state.update(
         itemsLangs: query.docs as List<QueryDocumentSnapshot<Map>>));
     // if (query.docs.isNotEmpty) {

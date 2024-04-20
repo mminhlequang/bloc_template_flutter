@@ -5,15 +5,29 @@ import 'package:temp_package_name/src/presentation/dashboard/cubit/dashboard_cub
 import 'package:temp_package_name/src/presentation/home/cubit/home_cubit.dart';
 
 import '../presentation/dashboard/dashboard_screen.dart';
+import '../presentation/departments/cubit/departments_cubit.dart';
+import '../presentation/departments/departments_screen.dart';
 import '../presentation/home/home_screen.dart';
-import '../presentation/subjects/cubit/subjects_cubit.dart';
-import '../presentation/subjects/subjects_screen.dart';
 import 'app_get.dart';
 
 GlobalKey<NavigatorState> get appNavigatorKey =>
     findInstance<GlobalKey<NavigatorState>>();
 bool get isAppContextReady => appNavigatorKey.currentContext != null;
 BuildContext get appContext => appNavigatorKey.currentContext!;
+
+pushWidget({
+  required child,
+  String? routeName,
+  bool opaque = true,
+}) {
+  return Navigator.of(appContext).push(PageRouteBuilder(
+    opaque: opaque,
+    pageBuilder: (context, animation, secondaryAnimation) => child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+        FadeTransition(opacity: animation, child: child),
+    settings: RouteSettings(name: routeName),
+  ));
+}
 
 // GoRouter configuration
 final goRouter = GoRouter(
@@ -44,13 +58,29 @@ final goRouter = GoRouter(
           ),
         ),
         GoRoute(
-          name: '/dashboard/subjects',
-          path: '/dashboard/subjects',
+          name: '/dashboard/departments',
+          path: '/dashboard/departments',
           builder: (context, state) => BlocProvider(
-            create: (context) => SubjectsCubit(),
-            child: const SubjectsScreen(),
+            create: (context) => DepartmentsCubit(),
+            child: const DepartmentsScreen(),
           ),
         ),
+        // GoRoute(
+        //   name: '/dashboard/users',
+        //   path: '/dashboard/users',
+        //   builder: (context, state) => BlocProvider(
+        //     create: (context) => SubjectsCubit(),
+        //     child: const SubjectsScreen(),
+        //   ),
+        // ),
+        // GoRoute(
+        //   name: '/dashboard/subjects',
+        //   path: '/dashboard/subjects',
+        //   builder: (context, state) => BlocProvider(
+        //     create: (context) => SubjectsCubit(),
+        //     child: const SubjectsScreen(),
+        //   ),
+        // ),
       ],
     ),
   ],
