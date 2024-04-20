@@ -6,6 +6,8 @@ import 'package:temp_package_name/src/utils/utils.dart';
 
 part 'dashboard_state.dart';
 
+DashboardCubit get dashboardCubit => findInstance<DashboardCubit>();
+
 class DashboardCubit extends Cubit<DashboardState> {
   DashboardCubit() : super(DashboardState());
 
@@ -13,8 +15,8 @@ class DashboardCubit extends Cubit<DashboardState> {
     changeMenu(DashboardMenu.home);
   }
 
-  changeMenu(DashboardMenu menu) {
+  changeMenu(DashboardMenu menu, {bool redirect = true}) {
     emit(state.update(menu: menu));
-    appContext.pushReplacement(menu.route);
+    if (redirect) appContext.pushReplacement(menu.route);
   }
 }

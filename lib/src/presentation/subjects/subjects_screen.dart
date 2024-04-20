@@ -40,12 +40,12 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
           shouldShow: true,
           animationDuration: const Duration(milliseconds: 250),
           fab: FloatingActionButton(
-            heroTag: 'WidgetFormCreateDepartment',
+            heroTag: 'WidgetFormCreateSubject',
             backgroundColor: appColorPrimary,
             child: const Icon(Icons.add, color: Colors.white),
             onPressed: () async {
               await pushWidget(
-                child: const WidgetFormCreateDepartment(),
+                child: const WidgetFormCreateSubject(),
                 opaque: false,
               );
               if (mounted) cubit.fetch();
@@ -64,7 +64,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Departments",
+                          "Subjects",
                           style: w600TextStyle(fontSize: 28),
                         ),
                         const SizedBox(
@@ -351,9 +351,11 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                   child: WidgetTableContainer(
                     header: const Row(
                       children: [
-                        WidgetRowValue.label(flex: 2, value: kdbid),
-                        WidgetRowValue.label(flex: 4, value: kdblabel),
-                        WidgetRowValue.label(value: kdbisEnable),
+                        WidgetRowValue.label(flex: 1, value: kdbid),
+                        WidgetRowValue.label(flex: 4, value: kdbproductName),
+                        WidgetRowValue.label(flex: 4, value: kdbseriProduct),
+                        WidgetRowValue.label(flex: 4, value: kdbquantity),
+                        WidgetRowValue.label(flex: 1, value: kdbisEnable),
                         WidgetRowValue.label(flex: 1, value: ''),
                       ],
                     ),
@@ -380,7 +382,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                               child: Row(
                                 children: [
                                   WidgetRowValue(
-                                    flex: 2,
+                                    flex: 1,
                                     value: e.data()[kdbid],
                                     maxLines: 99,
                                   ),
@@ -411,7 +413,29 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                                   // ),
                                   WidgetRowValue(
                                     flex: 4,
-                                    value: e.data()[kdblabel],
+                                    value: e.data()[kdbproductName],
+                                    maxLines: 99,
+                                    callback: (value) async {
+                                      await colSubjects
+                                          .doc('${e.data()[kdbid]}')
+                                          .update({kdblabel: value});
+                                      cubit.fetch();
+                                    },
+                                  ),
+                                  WidgetRowValue(
+                                    flex: 4,
+                                    value: e.data()[kdbseriProduct],
+                                    maxLines: 99,
+                                    callback: (value) async {
+                                      await colSubjects
+                                          .doc('${e.data()[kdbid]}')
+                                          .update({kdblabel: value});
+                                      cubit.fetch();
+                                    },
+                                  ),
+                                  WidgetRowValue(
+                                    flex: 4,
+                                    value: e.data()[kdbquantity],
                                     maxLines: 99,
                                     callback: (value) async {
                                       await colSubjects

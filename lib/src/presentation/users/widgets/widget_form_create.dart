@@ -7,7 +7,9 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:temp_package_name/src/presentation/widgets/widget_dialog_container.dart';
 import 'package:temp_package_name/src/presentation/widgets/widgets.dart';
+import 'package:temp_package_name/src/resources/firestore/constants.dart';
 import 'package:temp_package_name/src/resources/firestore/firestore.dart';
+import 'package:temp_package_name/src/resources/firestore/firestore_resources.dart';
 import 'package:temp_package_name/src/utils/utils.dart';
 
 import '../cubit/users_cubit.dart';
@@ -20,7 +22,10 @@ class WidgetFormCreateUser extends StatefulWidget {
 }
 
 class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
-  final TextEditingController labelController = TextEditingController();
+  final TextEditingController displayNameController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   bool isSetPublic = true;
   bool loading = false;
 
@@ -31,7 +36,10 @@ class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
     var id = timestampId;
     Map<String, dynamic> data = {
       kdbid: id,
-      kdblabel: labelController.text.trim(),
+      kdbdisplayName: displayNameController.text.trim(),
+      kdbfullname: fullNameController.text.trim(),
+      kdbphonenumber: phoneController.text.trim(),
+      kdbemail: emailController.text.trim(),
       kdbisEnable: isSetPublic,
     };
     loading = false;
@@ -76,7 +84,7 @@ class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
                     Expanded(
                       flex: 4,
                       child: WidgetTextField(
-                        controller: labelController,
+                        controller: displayNameController,
                         label: 'Displayname',
                         onChanged: (value) {
                           setState(() {});
@@ -98,7 +106,7 @@ class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
                 ),
                 const Gap(16),
                 WidgetTextField(
-                  controller: labelController,
+                  controller: fullNameController,
                   label: 'Fullname',
                   onChanged: (value) {
                     setState(() {});
@@ -106,7 +114,7 @@ class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
                 ),
                 const Gap(16),
                 WidgetTextField(
-                  controller: labelController,
+                  controller: phoneController,
                   label: 'Phone number',
                   onChanged: (value) {
                     setState(() {});
@@ -114,26 +122,26 @@ class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
                 ),
                 const Gap(16),
                 WidgetTextField(
-                  controller: labelController,
+                  controller: emailController,
                   label: 'Email',
                   onChanged: (value) {
                     setState(() {});
                   },
                 ),
-                const Gap(16),
-                WidgetCheck(
-                  status: isSetPublic,
-                  label: 'Set to enable',
-                  callback: (value) {
-                    setState(() {
-                      isSetPublic = !isSetPublic;
-                    });
-                  },
-                )
+                // const Gap(16),
+                // WidgetCheck(
+                //   status: isSetPublic,
+                //   label: 'Set to enable',
+                //   callback: (value) {
+                //     setState(() {
+                //       isSetPublic = !isSetPublic;
+                //     });
+                //   },
+                // )
               ],
               const Gap(24),
               WidgetButton(
-                enable: labelController.text.isNotEmpty,
+                enable: displayNameController.text.isNotEmpty,
                 label: 'Submit',
                 onTap: () async {
                   context.pop();

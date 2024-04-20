@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding:
           EdgeInsets.symmetric(horizontal: dashboardScreenWrapHorizPadding),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Gap(16),
           Row(
@@ -57,108 +58,65 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           const Gap(40),
-          Row(
-            children: [
-              WidgetRippleButton(
-                onTap: () {
-                  context
-                      .read<DashboardCubit>()
-                      .changeMenu(DashboardMenu.subjects);
-                },
-                color: appColorBackground,
-                borderRadius: BorderRadius.circular(16.sw),
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 24.sw, horizontal: 40.sw),
-                  decoration: BoxDecoration(
-                      color: appColorBackground,
-                      borderRadius: BorderRadius.circular(16.sw),
-                      boxShadow: [
-                        BoxShadow(
-                            color: appColorText.withOpacity(.12),
-                            blurRadius: 16)
-                      ]),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.margin_rounded,
-                              color: appColorText.withOpacity(.65)),
-                          Gap(20.sw),
-                          Text(
-                            'Total departments',
-                            style: w400TextStyle(
-                                fontSize: 20.sw,
-                                color: appColorText.withOpacity(.65)),
-                          ),
-                        ],
-                      ),
-                      Gap(8.sw),
-                      Row(
+          Expanded(
+            child: SingleChildScrollView(
+              child: Wrap(
+                spacing: 32.sw,
+                runSpacing: 32.sw,
+                children: List.generate(
+                  5,
+                  (index) => WidgetRippleButton(
+                    onTap: () {
+                      dashboardCubit.changeMenu(DashboardMenu.subjects);
+                    },
+                    color: appColorBackground,
+                    borderRadius: BorderRadius.circular(16.sw),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 24.sw, horizontal: 40.sw),
+                      decoration: BoxDecoration(
+                          color: appColorBackground,
+                          borderRadius: BorderRadius.circular(16.sw),
+                          boxShadow: [
+                            BoxShadow(
+                                color: appColorText.withOpacity(.12),
+                                blurRadius: 16)
+                          ]),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            '20',
-                            style: w700TextStyle(fontSize: 48.sw),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.margin_rounded,
+                                  color: appColorText.withOpacity(.65)),
+                              Gap(20.sw),
+                              Text(
+                                'Total departments',
+                                style: w400TextStyle(
+                                    fontSize: 20.sw,
+                                    color: appColorText.withOpacity(.65)),
+                              ),
+                            ],
+                          ),
+                          Gap(8.sw),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                '20',
+                                style: w700TextStyle(fontSize: 48.sw),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-              const Gap(32),
-              WidgetRippleButton(
-                onTap: () {
-                  context
-                      .read<DashboardCubit>()
-                      .changeMenu(DashboardMenu.subjects);
-                },
-                color: appColorBackground,
-                borderRadius: BorderRadius.circular(16.sw),
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 24.sw, horizontal: 40.sw),
-                  decoration: BoxDecoration(
-                      color: appColorBackground,
-                      borderRadius: BorderRadius.circular(16.sw),
-                      boxShadow: [
-                        BoxShadow(
-                            color: appColorText.withOpacity(.12),
-                            blurRadius: 16)
-                      ]),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.auto_fix_normal_sharp,
-                              color: appColorText.withOpacity(.65)),
-                          Gap(20.sw),
-                          Text(
-                            'Total Subjects',
-                            style: w400TextStyle(
-                                fontSize: 20.sw,
-                                color: appColorText.withOpacity(.65)),
-                          ),
-                        ],
-                      ),
-                      Gap(8.sw),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            '90',
-                            style: w700TextStyle(fontSize: 48.sw),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),

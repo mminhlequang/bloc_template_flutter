@@ -39,14 +39,12 @@ final goRouter = GoRouter(
   navigatorKey: appNavigatorKey,
   routes: [
     ShellRoute(
+      observers: [ShellDashboardNavigatorObserver()],
       pageBuilder: (context, state, child) {
         /// Example register new [bloc] using at [DashboardScreen]
         return NoTransitionPage(
-          child: BlocProvider(
-            create: (context) => DashboardCubit(),
-            child: DashboardScreenWrap(
-              child: child,
-            ),
+          child: DashboardScreenWrap(
+            child: child,
           ),
         );
       },
@@ -89,3 +87,26 @@ final goRouter = GoRouter(
     ),
   ],
 );
+
+class ShellDashboardNavigatorObserver extends NavigatorObserver {
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    print('[ShellDashboardNavigatorObserver]didPush ${route.settings.name}');
+    dashboardCubit.changeMenu(
+        DashboardMenu.values.firstWhere((e) => e.route == route.settings.name),
+        redirect: false);
+    super.didPush(route, previousRoute);
+  }
+
+  @override
+  void didReplace({Route? newRoute, Route? oldRoute}) {
+    print(
+        '[ShellDashboardNavigatorObserver]didReplace ${newRoute?.settings.name}');
+    dashboardCubit.changeMenu(
+        DashboardMenu.values.firstWhere(
+            (e) => e.route == newRoute?.settings.name,
+            orElse: () => DashboardMenu.values.first),
+        redirect: false);
+    super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
+  }
+}

@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 class WidgetDialogContainer extends StatelessWidget {
   final Widget child;
   final String? heroTag;
-  const WidgetDialogContainer({super.key, required this.child, this.heroTag});
+  final double? width;
+  const WidgetDialogContainer(
+      {super.key, required this.child, this.heroTag, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class WidgetDialogContainer extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.all(24),
                   padding: const EdgeInsets.all(32),
-                  width: 680,
+                  width: width ?? 680,
                   decoration: BoxDecoration(
                       color: appColorBackground,
                       borderRadius: BorderRadius.circular(26)),

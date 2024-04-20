@@ -351,9 +351,11 @@ class _UsersScreenState extends State<UsersScreen> {
                   child: WidgetTableContainer(
                     header: const Row(
                       children: [
-                        WidgetRowValue.label(flex: 2, value: kdbid),
-                        WidgetRowValue.label(flex: 1, value: kdblabel),
-                        WidgetRowValue.label(value: kdbisEnable),
+                        WidgetRowValue.label(flex: 1, value: kdbid),
+                        WidgetRowValue.label(flex: 2, value: kdbdisplayName),
+                        WidgetRowValue.label(flex: 2, value: kdbfullname),
+                        WidgetRowValue.label(flex: 2, value: kdbphonenumber),
+                        WidgetRowValue.label(flex: 3, value: kdbemail),
                         WidgetRowValue.label(flex: 1, value: ''),
                       ],
                     ),
@@ -380,7 +382,7 @@ class _UsersScreenState extends State<UsersScreen> {
                               child: Row(
                                 children: [
                                   WidgetRowValue(
-                                    flex: 2,
+                                    flex: 1,
                                     value: e.data()[kdbid],
                                     maxLines: 99,
                                   ),
@@ -411,25 +413,45 @@ class _UsersScreenState extends State<UsersScreen> {
                                   // ),
                                   WidgetRowValue(
                                     flex: 2,
-                                    value: e.data()[kdblabel],
+                                    value: e.data()[kdbdisplayName],
                                     maxLines: 99,
                                     callback: (value) async {
                                       await colSubjects
                                           .doc('${e.data()[kdbid]}')
-                                          .update({kdblabel: value});
+                                          .update({kdbdisplayName: value});
                                       cubit.fetch();
                                     },
                                   ),
                                   WidgetRowValue(
-                                    flex: 1,
+                                    flex: 2,
+                                    value: e.data()[kdbfullname],
                                     maxLines: 99,
-                                    cellDataType: CellDataType.bol,
-                                    value: e.data()[kdbisEnable],
-                                    label: 'Set to Enable',
                                     callback: (value) async {
                                       await colSubjects
                                           .doc('${e.data()[kdbid]}')
-                                          .update({kdbisEnable: value});
+                                          .update({kdbfullname: value});
+                                      cubit.fetch();
+                                    },
+                                  ),
+                                  WidgetRowValue(
+                                    flex: 2,
+                                    value: e.data()[kdbphonenumber],
+                                    maxLines: 99,
+                                    callback: (value) async {
+                                      await colSubjects
+                                          .doc('${e.data()[kdbid]}')
+                                          .update({kdbphonenumber: value});
+                                      cubit.fetch();
+                                    },
+                                  ),
+                                  WidgetRowValue(
+                                    flex: 3,
+                                    value: e.data()[kdbemail],
+                                    maxLines: 99,
+                                    callback: (value) async {
+                                      await colSubjects
+                                          .doc('${e.data()[kdbid]}')
+                                          .update({kdbemail: value});
                                       cubit.fetch();
                                     },
                                   ),
