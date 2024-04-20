@@ -3,10 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:temp_package_name/src/resources/firestore/firestore.dart';
 
-part 'departments_state.dart';
+part 'users_state.dart';
 
-class DepartmentsCubit extends Cubit<DepartmentsState> {
-  DepartmentsCubit() : super(DepartmentsState());
+class UsersCubit extends Cubit<UsersState> {
+  UsersCubit() : super(UsersState());
 
   fetch({page, limit}) async {
     state.page = page ?? state.page;
@@ -14,7 +14,7 @@ class DepartmentsCubit extends Cubit<DepartmentsState> {
     emit(state.update());
 
     if (state.items == null || state.items!.isEmpty || state.page == 1) {
-      var query = await colDepartments
+      var query = await colUsers
           .where(kdbisEnable, isEqualTo: state.isEnable)
           .limit(state.limit)
           .get();
@@ -23,7 +23,7 @@ class DepartmentsCubit extends Cubit<DepartmentsState> {
       var last = state.items!.last;
       emit(state.update(items: []));
 
-      var query = await colDepartments
+      var query = await colUsers
           .where(kdbisEnable, isEqualTo: state.isEnable)
           .startAfterDocument(last)
           .limit(state.limit)
@@ -31,10 +31,10 @@ class DepartmentsCubit extends Cubit<DepartmentsState> {
       emit(state.update(items: query.docs as List<QueryDocumentSnapshot<Map>>));
     }
 
-    AggregateQuerySnapshot querycount = await colDepartments.count().get();
+    AggregateQuerySnapshot querycount = await colUsers.count().get();
     var count = querycount.count;
 
-    AggregateQuerySnapshot querycountWithFilter = await colDepartments
+    AggregateQuerySnapshot querycountWithFilter = await colUsers
         .where(kdbisEnable, isEqualTo: state.isEnable)
         .count()
         .get();

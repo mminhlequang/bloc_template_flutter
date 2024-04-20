@@ -10,18 +10,16 @@ import 'package:temp_package_name/src/presentation/widgets/widgets.dart';
 import 'package:temp_package_name/src/resources/firestore/firestore.dart';
 import 'package:temp_package_name/src/utils/utils.dart';
 
-import '../cubit/departments_cubit.dart';
+import '../cubit/users_cubit.dart';
 
 class WidgetFormCreateUser extends StatefulWidget {
   const WidgetFormCreateUser({super.key});
 
   @override
-  State<WidgetFormCreateUser> createState() =>
-      _WidgetFormCreateUserState();
+  State<WidgetFormCreateUser> createState() => _WidgetFormCreateUserState();
 }
 
-class _WidgetFormCreateUserState
-    extends State<WidgetFormCreateUser> {
+class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
   final TextEditingController labelController = TextEditingController();
   bool isSetPublic = true;
   bool loading = false;
@@ -37,9 +35,8 @@ class _WidgetFormCreateUserState
       kdbisEnable: isSetPublic,
     };
     loading = false;
-    await colDepartments.doc('$id').set(data);
-    if (mounted) {
-      context.read<DepartmentsCubit>().fetch();
+    await colUsers.doc('$id').set(data);
+    if (mounted) { 
       context.pop();
     }
   }

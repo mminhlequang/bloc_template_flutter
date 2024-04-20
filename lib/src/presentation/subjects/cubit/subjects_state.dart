@@ -1,6 +1,6 @@
-part of 'departments_cubit.dart';
+part of 'subjects_cubit.dart';
 
-class DepartmentsState {
+class SubjectsState {
   int count;
   int countWithFilter;
   int page;
@@ -9,8 +9,7 @@ class DepartmentsState {
 
   bool isEnable;
 
-
-  DepartmentsState({
+  SubjectsState({
     this.isEnable = true,
     this.count = 0,
     this.countWithFilter = 0,
@@ -19,7 +18,7 @@ class DepartmentsState {
     this.items,
   });
 
-  DepartmentsState update({
+  SubjectsState update({
     bool? isEnable,
     int? count,
     int? countWithFilter,
@@ -27,7 +26,7 @@ class DepartmentsState {
     int? limit,
     List<QueryDocumentSnapshot<Map>>? items,
   }) {
-    return DepartmentsState(
+    return SubjectsState(
       isEnable: isEnable ?? this.isEnable,
       count: count ?? this.count,
       countWithFilter: countWithFilter ?? this.countWithFilter,

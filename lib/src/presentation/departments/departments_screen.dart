@@ -43,11 +43,12 @@ class _DepartmentsScreenState extends State<DepartmentsScreen> {
             heroTag: 'WidgetFormCreateDepartment',
             backgroundColor: appColorPrimary,
             child: const Icon(Icons.add, color: Colors.white),
-            onPressed: () {
-              pushWidget(
+            onPressed: () async {
+              await pushWidget(
                 child: const WidgetFormCreateDepartment(),
                 opaque: false,
               );
+              if (mounted) departmentsCubit.fetch();
             },
           ),
         ),

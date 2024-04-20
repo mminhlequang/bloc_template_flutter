@@ -8,6 +8,10 @@ import '../presentation/dashboard/dashboard_screen.dart';
 import '../presentation/departments/cubit/departments_cubit.dart';
 import '../presentation/departments/departments_screen.dart';
 import '../presentation/home/home_screen.dart';
+import '../presentation/subjects/cubit/subjects_cubit.dart';
+import '../presentation/subjects/subjects_screen.dart';
+import '../presentation/users/cubit/users_cubit.dart';
+import '../presentation/users/users_screen.dart';
 import 'app_get.dart';
 
 GlobalKey<NavigatorState> get appNavigatorKey =>
@@ -65,22 +69,22 @@ final goRouter = GoRouter(
             child: const DepartmentsScreen(),
           ),
         ),
-        // GoRoute(
-        //   name: '/dashboard/users',
-        //   path: '/dashboard/users',
-        //   builder: (context, state) => BlocProvider(
-        //     create: (context) => SubjectsCubit(),
-        //     child: const SubjectsScreen(),
-        //   ),
-        // ),
-        // GoRoute(
-        //   name: '/dashboard/subjects',
-        //   path: '/dashboard/subjects',
-        //   builder: (context, state) => BlocProvider(
-        //     create: (context) => SubjectsCubit(),
-        //     child: const SubjectsScreen(),
-        //   ),
-        // ),
+        GoRoute(
+          name: '/dashboard/users',
+          path: '/dashboard/users',
+          builder: (context, state) => BlocProvider(
+            create: (context) => UsersCubit(),
+            child: const UsersScreen(),
+          ),
+        ),
+        GoRoute(
+          name: '/dashboard/subjects',
+          path: '/dashboard/subjects',
+          builder: (context, state) => BlocProvider(
+            create: (context) => SubjectsCubit(),
+            child: const SubjectsScreen(),
+          ),
+        ),
       ],
     ),
   ],

@@ -304,7 +304,7 @@ class _WidgetRowValueState extends State<WidgetRowValue> {
             this.hide = hide;
             return Positioned(
               left: childPosition.dx - 12,
-              top: childPosition.dy + size.height + 4,
+              top: childPosition.dy - size.height,
               child: WidgetPopupContainer(
                 alignmentTail: Alignment.topLeft,
                 paddingTail: const EdgeInsets.only(left: 28),

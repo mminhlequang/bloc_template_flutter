@@ -10,7 +10,7 @@ import 'package:temp_package_name/src/presentation/widgets/widgets.dart';
 import 'package:temp_package_name/src/resources/firestore/firestore.dart';
 import 'package:temp_package_name/src/utils/utils.dart';
 
-import '../cubit/departments_cubit.dart';
+import '../cubit/subjects_cubit.dart';
 
 class WidgetFormCreateDepartment extends StatefulWidget {
   const WidgetFormCreateDepartment({super.key});
@@ -37,7 +37,7 @@ class _WidgetFormCreateDepartmentState
       kdbisEnable: isSetPublic,
     };
     loading = false;
-    await colDepartments.doc('$id').set(data);
+    await colSubjects.doc('$id').set(data);
     if (mounted) {
       context.pop();
     }

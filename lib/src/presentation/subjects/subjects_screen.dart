@@ -6,27 +6,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:temp_package_name/src/resources/firestore/constants.dart';
 import 'package:temp_package_name/src/resources/firestore/instances.dart';
+import 'package:temp_package_name/src/utils/utils.dart';
 
 import '../dashboard/dashboard_screen.dart';
 import '../widgets/widgets.dart';
 import 'cubit/subjects_cubit.dart';
 import 'widgets/widget_form_create.dart';
 
-class DepartmentsScreen extends StatefulWidget {
-  const DepartmentsScreen({super.key});
+class SubjectsScreen extends StatefulWidget {
+  const SubjectsScreen({super.key});
 
   @override
-  State<DepartmentsScreen> createState() => _DepartmentsScreenState();
+  State<SubjectsScreen> createState() => _SubjectsScreenState();
 }
 
-class _DepartmentsScreenState extends State<DepartmentsScreen> {
-  SubjectsCubit get subjectsCubit => context.read<SubjectsCubit>();
+class _SubjectsScreenState extends State<SubjectsScreen> {
+  SubjectsCubit get cubit => context.read<SubjectsCubit>();
 
   final TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    subjectsCubit.init();
+    cubit.init();
   }
 
   @override
@@ -39,16 +40,15 @@ class _DepartmentsScreenState extends State<DepartmentsScreen> {
           shouldShow: true,
           animationDuration: const Duration(milliseconds: 250),
           fab: FloatingActionButton(
-            heroTag: 'WidgetFormCreateSubjects',
+            heroTag: 'WidgetFormCreateDepartment',
             backgroundColor: appColorPrimary,
             child: const Icon(Icons.add, color: Colors.white),
-            onPressed: () {
-              // Navigator.of(context).push(PageRouteBuilder(
-              //     opaque: false,
-              //     barrierDismissible: true,
-              //     pageBuilder: (BuildContext context, _, __) {
-              //       return const WidgetFormCreateSubjects();
-              //     }));
+            onPressed: () async {
+              await pushWidget(
+                child: const WidgetFormCreateDepartment(),
+                opaque: false,
+              );
+              if (mounted) cubit.fetch();
             },
           ),
         ),
@@ -348,123 +348,118 @@ class _DepartmentsScreenState extends State<DepartmentsScreen> {
                 ),
                 const Gap(32),
                 Expanded(
-                  child: Column(
-                    children: [
-                      const WidgetRowHeader(
-                        child: Row(
-                          children: [
-                            WidgetRowValue.label(flex: 2, value: kdbid),
-                            WidgetRowValue.label(flex: 1, value: kdblabel),
-                            WidgetRowValue.label(value: kdbisEnable),
-                            WidgetRowValue.label(flex: 1, value: ''),
-                          ],
-                        ),
-                      ),
-                      const Gap(20),
-                      Expanded(
-                        child: ValueListenableBuilder(
-                          valueListenable: searchController,
-                          builder: (context, value, child) {
-                            String keyword = value.text;
-                            List<QueryDocumentSnapshot<Map>> items =
-                                List.from((state.items ?? []));
-                            return ListView.separated(
-                              itemCount: items.length,
-                              separatorBuilder: (context, index) => Container(
-                                height: .6,
-                                color: Colors.grey.shade200,
-                              ),
-                              itemBuilder: (_, index) {
-                                var e = items[index];
+                  child: WidgetTableContainer(
+                    header: const Row(
+                      children: [
+                        WidgetRowValue.label(flex: 2, value: kdbid),
+                        WidgetRowValue.label(flex: 4, value: kdblabel),
+                        WidgetRowValue.label(value: kdbisEnable),
+                        WidgetRowValue.label(flex: 1, value: ''),
+                      ],
+                    ),
+                    data: ValueListenableBuilder(
+                      valueListenable: searchController,
+                      builder: (context, value, child) {
+                        String keyword = value.text;
+                        List<QueryDocumentSnapshot<Map>> items =
+                            List.from((state.items ?? []));
+                        return ListView.separated(
+                          itemCount: items.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          separatorBuilder: (context, index) => Container(
+                            height: .6,
+                            color: Colors.grey.shade200,
+                          ),
+                          itemBuilder: (_, index) {
+                            var e = items[index];
 
-                                return WidgetRowItem(
-                                  key: ValueKey(e),
-                                  index: index,
-                                  child: Row(
-                                    children: [
-                                      WidgetRowValue(
-                                        flex: 2,
-                                        value: e.data()[kdbid],
-                                        maxLines: 99,
-                                      ),
-
-                                      // WidgetRowValue(
-                                      //   flex: 2,
-                                      //   valueEdit: e.data()[kdbimageUrl] ==
-                                      //               null ||
-                                      //           e.data()[kdbimageUrl]!.isEmpty
-                                      //       ? '...'
-                                      //       : e.data()[kdbimageUrl],
-                                      //   value: e.data()[kdbimageUrl] == null ||
-                                      //           e.data()[kdbimageUrl]!.isEmpty
-                                      //       ? '...'
-                                      //       : AspectRatio(
-                                      //           aspectRatio: 1,
-                                      //           child: WidgetAppImage(
-                                      //               imageUrl:
-                                      //                   e.data()[kdbimageUrl]),
-                                      //         ),
-                                      //   maxLines: 99,
-                                      //   callback: (value) async {
-                                      //     await colSubjects
-                                      //         .doc('${e.data()[kdbid]}')
-                                      //         .update({kdbimageUrl: value});
-                                      //     subjectsCubit.fetch();
-                                      //   },
-                                      // ),
-                                      WidgetRowValue(
-                                        flex: 2,
-                                        value: e.data()[kdblabel],
-                                        maxLines: 99,
-                                        callback: (value) async {
-                                          await colSubjects
-                                              .doc('${e.data()[kdbid]}')
-                                              .update({kdblabel: value});
-                                          subjectsCubit.fetch();
-                                        },
-                                      ),
-                                      WidgetRowValue(
-                                        flex: 1,
-                                        maxLines: 99,
-                                        cellDataType: CellDataType.bol,
-                                        value: e.data()[kdbisEnable],
-                                        label: 'Set to Enable',
-                                        callback: (value) async {
-                                          await colSubjects
-                                              .doc('${e.data()[kdbid]}')
-                                              .update({kdbisEnable: value});
-                                          subjectsCubit.fetch();
-                                        },
-                                      ),
-                                      WidgetRowValue(
-                                        flex: 1,
-                                        value: WidgetDeleteButton(
-                                          callback: () async {
-                                            await colSubjects
-                                                .doc('${e.data()[kdbid]}')
-                                                .delete();
-                                            subjectsCubit.fetch();
-                                            // findInstance<QuizsBloc>()
-                                            //     .needRefresh();
-                                            // var queries = await colQuizs
-                                            //     .where(kdbsubjectId,
-                                            //         isEqualTo: e.data()[kdbid])
-                                            //     .get();
-                                            // for (var doc in queries.docs) {
-                                            //   colQuizs.doc(doc.id).delete();
-                                            // }
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                            return WidgetRowItem(
+                              key: ValueKey(e),
+                              index: index,
+                              child: Row(
+                                children: [
+                                  WidgetRowValue(
+                                    flex: 2,
+                                    value: e.data()[kdbid],
+                                    maxLines: 99,
                                   ),
-                                );
-                              },
+
+                                  // WidgetRowValue(
+                                  //   flex: 2,
+                                  //   valueEdit: e.data()[kdbimageUrl] ==
+                                  //               null ||
+                                  //           e.data()[kdbimageUrl]!.isEmpty
+                                  //       ? '...'
+                                  //       : e.data()[kdbimageUrl],
+                                  //   value: e.data()[kdbimageUrl] == null ||
+                                  //           e.data()[kdbimageUrl]!.isEmpty
+                                  //       ? '...'
+                                  //       : AspectRatio(
+                                  //           aspectRatio: 1,
+                                  //           child: WidgetAppImage(
+                                  //               imageUrl:
+                                  //                   e.data()[kdbimageUrl]),
+                                  //         ),
+                                  //   maxLines: 99,
+                                  //   callback: (value) async {
+                                  //     await colSubjects
+                                  //         .doc('${e.data()[kdbid]}')
+                                  //         .update({kdbimageUrl: value});
+                                  //     subjectsCubit.fetch();
+                                  //   },
+                                  // ),
+                                  WidgetRowValue(
+                                    flex: 4,
+                                    value: e.data()[kdblabel],
+                                    maxLines: 99,
+                                    callback: (value) async {
+                                      await colSubjects
+                                          .doc('${e.data()[kdbid]}')
+                                          .update({kdblabel: value});
+                                      cubit.fetch();
+                                    },
+                                  ),
+                                  WidgetRowValue(
+                                    flex: 1,
+                                    maxLines: 99,
+                                    cellDataType: CellDataType.bol,
+                                    value: e.data()[kdbisEnable],
+                                    label: 'Set to Enable',
+                                    callback: (value) async {
+                                      await colSubjects
+                                          .doc('${e.data()[kdbid]}')
+                                          .update({kdbisEnable: value});
+                                      cubit.fetch();
+                                    },
+                                  ),
+                                  WidgetRowValue(
+                                    flex: 1,
+                                    value: WidgetDeleteButton(
+                                      callback: () async {
+                                        await colSubjects
+                                            .doc('${e.data()[kdbid]}')
+                                            .delete();
+                                        cubit.fetch();
+                                        // findInstance<QuizsBloc>()
+                                        //     .needRefresh();
+                                        // var queries = await colQuizs
+                                        //     .where(kdbsubjectId,
+                                        //         isEqualTo: e.data()[kdbid])
+                                        //     .get();
+                                        // for (var doc in queries.docs) {
+                                        //   colQuizs.doc(doc.id).delete();
+                                        // }
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             );
                           },
-                        ),
-                      ),
-                    ],
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -488,7 +483,7 @@ class __NumberOfSubjectsState extends State<_NumberOfSubjects> {
   int count = 0;
   _getCount() async {
     // AggregateQuerySnapshot query =
-    //     await colDepartments.where(kdbsubjectId, isEqualTo: widget.id).count().get();
+    //     await colSubjects.where(kdbsubjectId, isEqualTo: widget.id).count().get();
     // count = query.count ?? 0;
     // setState(() {});
   }

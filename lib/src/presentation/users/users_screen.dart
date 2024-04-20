@@ -10,7 +10,7 @@ import 'package:temp_package_name/src/utils/utils.dart';
 
 import '../dashboard/dashboard_screen.dart';
 import '../widgets/widgets.dart';
-import 'cubit/departments_cubit.dart';
+import 'cubit/users_cubit.dart';
 import 'widgets/widget_form_create.dart';
 
 class UsersScreen extends StatefulWidget {
@@ -21,13 +21,13 @@ class UsersScreen extends StatefulWidget {
 }
 
 class _UsersScreenState extends State<UsersScreen> {
-  DepartmentsCubit get departmentsCubit => context.read<DepartmentsCubit>();
+  UsersCubit get cubit => context.read<UsersCubit>();
 
   final TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    departmentsCubit.init();
+    cubit.init();
   }
 
   @override
@@ -43,16 +43,17 @@ class _UsersScreenState extends State<UsersScreen> {
             heroTag: 'WidgetFormCreateUser',
             backgroundColor: appColorPrimary,
             child: const Icon(Icons.add, color: Colors.white),
-            onPressed: () {
-              pushWidget(
+            onPressed: () async {
+              await pushWidget(
                 child: const WidgetFormCreateUser(),
                 opaque: false,
               );
+              if (mounted) cubit.fetch();
             },
           ),
         ),
         backgroundColor: Colors.transparent,
-        body: BlocBuilder<DepartmentsCubit, DepartmentsState>(
+        body: BlocBuilder<UsersCubit, UsersState>(
           builder: (context, state) {
             return Column(
               children: [
@@ -63,7 +64,7 @@ class _UsersScreenState extends State<UsersScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Departments",
+                          "Users",
                           style: w600TextStyle(fontSize: 28),
                         ),
                         const SizedBox(
@@ -416,7 +417,7 @@ class _UsersScreenState extends State<UsersScreen> {
                                       await colSubjects
                                           .doc('${e.data()[kdbid]}')
                                           .update({kdblabel: value});
-                                      departmentsCubit.fetch();
+                                      cubit.fetch();
                                     },
                                   ),
                                   WidgetRowValue(
@@ -429,7 +430,7 @@ class _UsersScreenState extends State<UsersScreen> {
                                       await colSubjects
                                           .doc('${e.data()[kdbid]}')
                                           .update({kdbisEnable: value});
-                                      departmentsCubit.fetch();
+                                      cubit.fetch();
                                     },
                                   ),
                                   WidgetRowValue(
@@ -439,7 +440,7 @@ class _UsersScreenState extends State<UsersScreen> {
                                         await colSubjects
                                             .doc('${e.data()[kdbid]}')
                                             .delete();
-                                        departmentsCubit.fetch();
+                                        cubit.fetch();
                                         // findInstance<QuizsBloc>()
                                         //     .needRefresh();
                                         // var queries = await colQuizs
@@ -482,7 +483,7 @@ class __NumberOfSubjectsState extends State<_NumberOfSubjects> {
   int count = 0;
   _getCount() async {
     // AggregateQuerySnapshot query =
-    //     await colDepartments.where(kdbsubjectId, isEqualTo: widget.id).count().get();
+    //     await colUsers.where(kdbsubjectId, isEqualTo: widget.id).count().get();
     // count = query.count ?? 0;
     // setState(() {});
   }

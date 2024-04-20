@@ -49,10 +49,11 @@ class _WidgetDeleteButtonState extends State<WidgetDeleteButton> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Text(
-                      'Are you sure?',
+                      'Are you sure\nThat you want delete it?',
                       overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
                       style: w400TextStyle(fontSize: 16),
                     ),
                   ),
