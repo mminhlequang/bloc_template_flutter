@@ -36,7 +36,7 @@ class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
     };
     loading = false;
     await colUsers.doc('$id').set(data);
-    if (mounted) { 
+    if (mounted) {
       context.pop();
     }
   }
@@ -44,7 +44,7 @@ class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
   @override
   Widget build(BuildContext context) {
     return WidgetDialogContainer(
-      heroTag: "WidgetFormCreateDepartment",
+      heroTag: "WidgetFormCreateUser",
       child: SingleChildScrollView(
         child: AnimatedSize(
           duration: const Duration(milliseconds: 300),
@@ -53,7 +53,7 @@ class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Departments",
+                "Users",
                 style: w600TextStyle(fontSize: 28),
               ),
               const Gap(8),
@@ -74,14 +74,15 @@ class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
                 Row(
                   children: [
                     Expanded(
-                        flex: 4,
-                        child: WidgetTextField(
-                          controller: labelController,
-                          label: 'Label',
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                        )),
+                      flex: 4,
+                      child: WidgetTextField(
+                        controller: labelController,
+                        label: 'Displayname',
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                      ),
+                    ),
                     // const Gap(16),
                     // Expanded(
                     //   flex: 1,
@@ -94,6 +95,30 @@ class _WidgetFormCreateUserState extends State<WidgetFormCreateUser> {
                     //   ),
                     // ),
                   ],
+                ),
+                const Gap(16),
+                WidgetTextField(
+                  controller: labelController,
+                  label: 'Fullname',
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                ),
+                const Gap(16),
+                WidgetTextField(
+                  controller: labelController,
+                  label: 'Phone number',
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                ),
+                const Gap(16),
+                WidgetTextField(
+                  controller: labelController,
+                  label: 'Email',
+                  onChanged: (value) {
+                    setState(() {});
+                  },
                 ),
                 const Gap(16),
                 WidgetCheck(
