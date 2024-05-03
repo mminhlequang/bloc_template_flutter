@@ -67,7 +67,6 @@ class _AppState extends State<_App> {
     authCubit.load();
   }
 
-  GlobalKey key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Portal(
