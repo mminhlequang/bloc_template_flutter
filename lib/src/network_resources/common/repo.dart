@@ -1,6 +1,6 @@
-import 'package:_iwu_pack_network/network_resources/resources.dart'; 
+import 'package:internal_network/network_resources/resources.dart';
 
-import 'app_api.dart'; 
+import 'app_api.dart';
 
 class CommonRepo {
   CommonRepo._();
@@ -13,7 +13,7 @@ class CommonRepo {
     return _instance!;
   }
 
-  late MyAppApi _api; 
+  late MyAppApi _api;
 
   Future<bool> demo([params]) async {
     NetworkResponse response = await _api.demo(params);

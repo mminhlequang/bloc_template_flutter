@@ -1,6 +1,6 @@
 // import 'dart:async';
 
-// import 'package:_iwu_pack/_iwu_pack.dart';
+// import 'package:internal_core/internal_core.dart';
 // import 'package:app/src/utils/utils.dart';
 // import 'package:app_links/app_links.dart';
 // import 'package:flutter/services.dart';

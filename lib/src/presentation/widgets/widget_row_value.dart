@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:_iwu_pack/_iwu_pack.dart';
+import 'package:internal_core/internal_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';

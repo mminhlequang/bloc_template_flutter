@@ -1,5 +1,5 @@
-import 'package:_iwu_pack_network/_iwu_pack_network.dart';
-import 'package:_iwu_pack_network/network_resources/resources.dart';
+import 'package:internal_network/internal_network.dart';
+import 'package:internal_network/network_resources/resources.dart';
 import 'package:dio/dio.dart';
 
 import 'model/feedback_type.dart';

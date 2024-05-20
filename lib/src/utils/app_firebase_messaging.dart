@@ -1,4 +1,4 @@
-// import 'package:_iwu_pack/setup/index.dart';
+// import 'package:internal_core/setup/index.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 
 // Future<void> backgroundMessageHandler(RemoteMessage message) async {}

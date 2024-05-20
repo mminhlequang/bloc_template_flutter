@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:_iwu_pack/_iwu_pack.dart';
-import 'package:_iwu_pack/widgets/widgets.dart';
+import 'package:internal_core/internal_core.dart';
+import 'package:internal_core/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';

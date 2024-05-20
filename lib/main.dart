@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 import 'package:url_strategy/url_strategy.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
-import '_iwu_pack.dart';
+import 'internal_setup.dart';
 import 'src/base/bloc.dart';
 import 'src/utils/utils.dart';
 
@@ -38,7 +38,7 @@ void main() async {
   ]);
   bloc.Bloc.observer = AppBlocObserver();
 
-  iwuSetup();
+  internalSetup();
   getItSetup();
 
   if (kDebugMode) {
