@@ -83,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: WidgetRippleButton(
                                   onTap: () {
                                     appContext.setLocale(e);
+                                    WidgetsBinding.instance.performReassemble();
                                   },
                                   color: appColorText,
                                   borderRadius: BorderRadius.circular(8),

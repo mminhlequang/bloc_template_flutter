@@ -67,7 +67,7 @@ appChangedTheme() {
   AppPrefs.instance.themeModel = AppPrefs.instance.isDarkTheme
       ? AppPrefsBase.themeModeLightKey
       : AppPrefsBase.themeModeDarkKey;
-  WidgetsFlutterBinding.ensureInitialized().performReassemble();
+  WidgetsBinding.instance.performReassemble();
 }
 
 enum AppSnackBarType { error, success, notitfication }
