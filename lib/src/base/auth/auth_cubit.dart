@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:temp_package_name/src/utils/utils.dart';
 
-part 'auth_state.dart';
 
 enum AuthStateType { none, logged }
 
@@ -53,5 +52,22 @@ class AuthCubit extends Cubit<AuthState> {
     if (state.stateType == AuthStateType.logged) {
       // Get.offAllNamed(Routes.nav);
     } else {}
+  }
+}
+
+class AuthState {
+  AuthStateType stateType;
+  dynamic user;
+
+  AuthState({
+    this.stateType = AuthStateType.none,
+    this.user,
+  });
+
+  AuthState update({AuthStateType? stateType, dynamic user}) {
+    return AuthState(
+      stateType: stateType ?? this.stateType,
+      user: user ?? this.user,
+    );
   }
 }

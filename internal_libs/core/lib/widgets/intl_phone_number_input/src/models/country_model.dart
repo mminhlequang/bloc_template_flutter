@@ -47,8 +47,8 @@ class Country {
         other.dialCode == dialCode;
   }
 
-  @override
-  int get hashCode => hashValues(alpha2Code, alpha3Code, dialCode);
+  // @override
+  // int get hashCode => hashValues(alpha2Code, alpha3Code, dialCode);
 
   @override
   String toString() => '[Country] { '
