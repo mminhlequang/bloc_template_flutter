@@ -36,7 +36,7 @@ appOpenBottomSheet(
 }
 
 bool appIsDialogOpen = false;
-appDialog(Widget child, {bool barrierDismissible = true}) async {
+appOpenDialog(Widget child, {bool barrierDismissible = true}) async {
   appIsDialogOpen = true;
   var r = await showGeneralDialog(
     barrierLabel: "popup",
@@ -59,7 +59,7 @@ appDialog(Widget child, {bool barrierDismissible = true}) async {
   return r;
 }
 
-hideKeyboard() {
+appHideKeyboard() {
   FocusManager.instance.primaryFocus?.unfocus();
 }
 
@@ -70,13 +70,13 @@ appChangedTheme() {
   WidgetsBinding.instance.performReassemble();
 }
 
-enum AppSnackBarType { error, success, notitfication }
-
 appCatchLog(e) {
   appDebugPrint('[catchLog] $e');
 }
 
-showSnackBar({context, required msg, Duration? duration}) {
+enum AppSnackBarType { error, success, notitfication }
+
+appShowSnackBar({context, required msg, Duration? duration}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(

@@ -4,6 +4,7 @@ import 'package:internal_core/internal_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:temp_package_name/src/utils/utils.dart';
 
 import 'widget_check.dart';
 import 'widget_popup_container.dart';
@@ -158,15 +159,9 @@ class _WidgetRowValueState extends State<WidgetRowValue> {
               Clipboard.setData(ClipboardData(
                 text: widget.value is Widget ? '' : widget.value.toString(),
               ));
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    "Text copied success!",
-                    style: w300TextStyle(color: appColorBackground),
-                  ),
-                  duration: const Duration(milliseconds: 500),
-                  backgroundColor: appColorText,
-                ),
+              appShowSnackBar(
+                context: context,
+                msg: "Text copied success!",
               );
             },
             onDoubleTap: () {
