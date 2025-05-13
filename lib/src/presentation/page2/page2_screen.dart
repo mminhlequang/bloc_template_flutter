@@ -2,6 +2,7 @@ import 'package:internal_core/internal_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:temp_package_name/src/constants/constants.dart';
 
 class Page2Screen extends StatefulWidget {
   const Page2Screen({super.key});
@@ -38,7 +39,7 @@ class _Page2ScreenState extends State<Page2Screen> {
                   context.pop();
                 },
                 color: appColorText,
-                borderRadius: BorderRadius.circular(8),
+                radius: 8,
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 32),

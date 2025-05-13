@@ -5,6 +5,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:temp_package_name/src/base/bloc.dart';
+import 'package:temp_package_name/src/constants/app_colors.dart';
 import 'package:temp_package_name/src/utils/utils.dart';
 
 class Page1Screen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _Page1ScreenState extends State<Page1Screen> {
                 context.pop();
               },
               color: appColorText,
-              borderRadius: BorderRadius.circular(8),
+              radius: 8,
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 32),
@@ -58,7 +59,7 @@ class _Page1ScreenState extends State<Page1Screen> {
                 context.push('/page2');
               },
               color: appColorText,
-              borderRadius: BorderRadius.circular(8),
+              radius: 8,
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 32),

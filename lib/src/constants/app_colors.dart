@@ -3,33 +3,36 @@ import 'package:flutter/material.dart';
 
 import '../utils/utils.dart';
 
-class AppColors extends AppColorsBase {
+Color get appColorBackground => AppColors.instance.background;
+
+Color get appColorElement => AppColors.instance.element;
+
+Color get appColorPrimary => AppColors.instance.primary;
+
+Color get appColorText => AppColors.instance.text;
+
+class AppColors {
   AppColors._();
 
   static final AppColors _instance = AppColors._();
 
   static AppColors get instance => _instance;
 
-  @override
-  Color get text => byTheme(Colors.black, kdark: Colors.white);
+  Color get text => appValueByTheme(Colors.black, kdark: Colors.white);
 
-  @override
-  Color get background => byTheme(Colors.white, kdark: Colors.black);
+  Color get background => appValueByTheme(Colors.white, kdark: Colors.black);
 
-  @override
-  Color get element => byTheme(Colors.grey[200]!, kdark: Colors.grey[200]!);
+  Color get element =>
+      appValueByTheme(Colors.grey[200]!, kdark: Colors.grey[200]!);
 
-  @override
-  Color get primary => byTheme(hexColor('00BDF9'));
+  Color get primary => appValueByTheme(hexColor('00BDF9'));
 
-  @override
-  Color get shimerHighlightColor => byTheme(hexColor('#1C222C'));
+  Color get shimerHighlightColor => appValueByTheme(hexColor('#1C222C'));
 
-  @override
-  Color get shimmerBaseColor => byTheme(hexColor('#1C222C'));
+  Color get shimmerBaseColor => appValueByTheme(hexColor('#1C222C'));
 }
 
-byTheme(klight, {kdark}) {
+appValueByTheme(klight, {kdark}) {
   if (AppPrefs.instance.isDarkTheme) {
     return kdark ?? klight;
   }

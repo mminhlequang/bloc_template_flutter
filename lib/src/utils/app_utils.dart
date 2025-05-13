@@ -2,6 +2,7 @@ import 'package:internal_core/internal_core.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/constants.dart';
 import 'utils.dart';
 // import 'dart:html' as html;
 
@@ -64,9 +65,8 @@ appHideKeyboard() {
 }
 
 appChangedTheme() {
-  AppPrefs.instance.themeModel = AppPrefs.instance.isDarkTheme
-      ? AppPrefsBase.themeModeLightKey
-      : AppPrefsBase.themeModeDarkKey;
+  AppPrefs.instance.themeModel =
+      AppPrefs.instance.isDarkTheme ? keyThemeModeLight : keyThemeModeDark;
   WidgetsBinding.instance.performReassemble();
 }
 

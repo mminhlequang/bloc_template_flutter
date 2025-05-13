@@ -1,5 +1,4 @@
 import 'package:internal_core/internal_core.dart';
-import 'package:internal_core/setup/app_setup.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'src/constants/constants.dart';

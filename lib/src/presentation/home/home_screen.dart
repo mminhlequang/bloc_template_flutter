@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:temp_package_name/src/utils/utils.dart';
 
+import '../../constants/app_colors.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -50,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   context.push('/page1');
                 },
                 color: appColorText,
-                borderRadius: BorderRadius.circular(8),
+                radius: 8,
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 32),
@@ -86,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     WidgetsBinding.instance.performReassemble();
                                   },
                                   color: appColorText,
-                                  borderRadius: BorderRadius.circular(8),
+                                  radius: 8,
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 32),

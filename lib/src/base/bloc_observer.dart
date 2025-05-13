@@ -1,4 +1,4 @@
-import 'package:internal_core/setup/index.dart';
+import 'package:internal_core/internal_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBlocObserver extends BlocObserver {
