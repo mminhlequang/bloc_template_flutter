@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 
-import 'package:internal_core/setup/app_base.dart';
+import 'package:internal_core/internal_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:jwt_decode/jwt_decode.dart';

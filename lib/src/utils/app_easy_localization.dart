@@ -9,7 +9,10 @@ Future initEasyLocalization() async {
 
 Widget wrapEasyLocalization({required child}) => EasyLocalization(
       child: child,
-      startLocale: appSupportedLocales.first,
+      startLocale: appSupportedLocales.firstWhere(
+        (e) => e.languageCode == AppPrefs.instance.languageCode,
+        orElse: () => appSupportedLocales.first,
+      ),
       fallbackLocale: appSupportedLocales.first,
       supportedLocales: appSupportedLocales,
       path: 'assets/l10n',

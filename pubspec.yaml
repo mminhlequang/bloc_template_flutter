@@ -48,12 +48,12 @@ dependencies:
     git:
       url: https://github.com/mminhlequang/internal_libs_flutter.git
       path: core/
-      ref: 4b6abaac09604876311b80a3df2e7bf0b2ea3d5a
+      ref: 243af16d637126e9101837afc68f87ac93027f70
   internal_network:
     git:
       url: https://github.com/mminhlequang/internal_libs_flutter.git
       path: network/
-      ref: 4b6abaac09604876311b80a3df2e7bf0b2ea3d5a
+      ref: 243af16d637126e9101837afc68f87ac93027f70
 
 
 dependency_overrides:
