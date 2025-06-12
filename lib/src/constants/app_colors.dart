@@ -27,9 +27,11 @@ class AppColors {
 
   Color get primary => appValueByTheme(hexColor('00BDF9'));
 
-  Color get shimerHighlightColor => appValueByTheme(hexColor('#1C222C'));
+  Color get shimmerHighlightColor => appValueByTheme(hexColor('#1C222C'));
 
   Color get shimmerBaseColor => appValueByTheme(hexColor('#1C222C'));
+  
+  Color get hoverColor => appValueByTheme(hexColor('#1C222C'));
 }
 
 appValueByTheme(klight, {kdark}) {
