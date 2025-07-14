@@ -59,6 +59,8 @@ class AppPrefs {
 
   String get languageCode => _boxData.get(keyLanguageCode) ?? 'en';
 
+  bool get isLanguageCodeEmpty => _boxData.get(keyLanguageCode) == null || _boxData.get(keyLanguageCode) == '';
+
   set dateFormat(String value) => _boxData.put('dateFormat', value);
 
   String get dateFormat => _boxData.get('dateFormat') ?? 'dd/MM/yyyy';

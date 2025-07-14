@@ -14,6 +14,43 @@ GlobalKey<NavigatorState> get appNavigatorKey =>
 bool get isAppContextReady => appNavigatorKey.currentContext != null;
 BuildContext get appContext => appNavigatorKey.currentContext!;
 
+
+clearAllRouters([String? router]) {
+  try {
+    while (appContext.canPop() == true) {
+      appContext.pop();
+    }
+  } catch (_) {}
+  if (router != null) {
+    appContext.pushReplacement(router);
+  }
+}
+
+pushWidget(
+    {required child,
+    String? routeName,
+    bool opaque = true,
+    bool replacement = false}) {
+  if (replacement) {
+    return Navigator.of(appContext).pushReplacement(PageRouteBuilder(
+      opaque: opaque,
+      pageBuilder: (context, animation, secondaryAnimation) => child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+      settings: RouteSettings(name: routeName),
+    ));
+  } else {
+    return Navigator.of(appContext).push(PageRouteBuilder(
+      opaque: opaque,
+      pageBuilder: (context, animation, secondaryAnimation) => child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+      settings: RouteSettings(name: routeName),
+    ));
+  }
+}
+
+
 // GoRouter configuration
 final goRouter = GoRouter(
   navigatorKey: appNavigatorKey,
