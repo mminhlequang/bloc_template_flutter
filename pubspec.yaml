@@ -13,46 +13,46 @@ dependencies:
     sdk: flutter
  
   equatable: ^2.0.7
-  bloc: ^9.0.0
+  bloc: ^9.0.1
   flutter_bloc: ^9.1.1
   bloc_concurrency: ^0.3.0
-  get_it: ^8.0.3
-  easy_localization: ^3.0.7+1
-  go_router: ^16.0.0
+  get_it: ^8.2.0
+  easy_localization: ^3.0.8
+  go_router: ^16.2.4
 
   cupertino_icons: ^1.0.8
-  dio: ^5.8.0+1
+  dio: ^5.9.0
   jwt_decode: ^0.3.1
-  connectivity_plus: ^6.1.4
+  connectivity_plus: ^7.0.0
   hive: ^2.2.3
   path_provider: ^2.1.5
   cached_network_image: ^3.4.1
-  flutter_svg: ^2.2.0
-  image_picker: ^1.1.2
-  image_cropper: ^9.1.0
+  flutter_svg: ^2.2.1
+  image_picker: ^1.2.0
+  image_cropper: ^11.0.0
   flutter_keyboard_visibility: ^6.0.0
   modal_bottom_sheet: ^3.0.0
   flutter_staggered_animations: ^1.1.1
   auto_size_text: ^3.0.0
-  google_fonts: ^6.2.1
+  google_fonts: ^6.3.2
   file: ^7.0.1
   url_strategy: ^0.3.0
   flutter_portal: ^1.1.4
   dotted_border: ^3.1.0
   gap: ^3.0.1
   flutter_switch: ^0.3.2
-  sentry_flutter: ^9.4.0
+  sentry_flutter: ^9.7.0
 
   internal_core:
     git:
       url: https://github.com/mminhlequang/internal_libs_flutter.git
       path: core/
-      ref: 37ea161d815f7c95088f8a2e918f2ae793ade15c
+      ref: 709a7a600c5c18331784d58693cc2dafde120831
   internal_network:
     git:
       url: https://github.com/mminhlequang/internal_libs_flutter.git
       path: network/
-      ref: 37ea161d815f7c95088f8a2e918f2ae793ade15c
+      ref: 709a7a600c5c18331784d58693cc2dafde120831
 
 
 dependency_overrides:
@@ -68,6 +68,7 @@ dev_dependencies:
 flutter_icons:
   android: "ic_launcher"
   ios: true
+  remove_alpha_ios: true
   image_path: "assets/images/png/logo_1024.png"
 
 jsonToDart:
