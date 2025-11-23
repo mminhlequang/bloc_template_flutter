@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
-import 'package:url_strategy/url_strategy.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
 import 'internal_setup.dart';
@@ -14,9 +14,7 @@ import 'src/utils/utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) {
-    setPathUrlStrategy();
-  }
+  if (kIsWeb) usePathUrlStrategy();
 
   await Future.wait([
     // if (kIsWeb)
@@ -41,16 +39,7 @@ void main() async {
   internalSetup();
   getItSetup();
 
-  if (kDebugMode) {
-    runApp(wrapEasyLocalization(child: const _App()));
-  } else {
-    // await SentryFlutter.init((options) {
-    //   options.dsn =
-    //       'https://7c5653105e38011b42c99c079a1f0815@o4505117818814464.ingest.sentry.io/4506229022851072';
-    //   options.tracesSampleRate = 1.0;
-    //   options.environment = kDebugMode ? 'debug' : 'preprod';
-    // }, appRunner: () => runApp(wrapEasyLocalization(child: const _App())));
-  }
+  runApp(wrapEasyLocalization(child: const _App()));
 }
 
 class _App extends StatefulWidget {
