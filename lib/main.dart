@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
 import 'internal_setup.dart';
@@ -14,7 +13,6 @@ import 'src/utils/utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) usePathUrlStrategy();
 
   await Future.wait([
     // if (kIsWeb)

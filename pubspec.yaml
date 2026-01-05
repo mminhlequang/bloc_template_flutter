@@ -11,8 +11,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_web_plugins:
-    sdk: flutter
  
   equatable: ^2.0.7
   bloc: ^9.1.0
@@ -46,13 +44,7 @@ dependencies:
   internal_core:
     git:
       url: https://github.com/mminhlequang/internal_libs_flutter.git
-      path: core/
-      ref: 709a7a600c5c18331784d58693cc2dafde120831
-  internal_network:
-    git:
-      url: https://github.com/mminhlequang/internal_libs_flutter.git
-      path: network/
-      ref: 709a7a600c5c18331784d58693cc2dafde120831
+      ref: 6346256c040c9b2926bbfca67e3177cf60a3f0c9
 
 
 dependency_overrides:

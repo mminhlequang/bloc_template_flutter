@@ -1,5 +1,5 @@
-import 'package:internal_network/internal_network.dart';
-import 'package:internal_network/network_resources/resources.dart';
+import 'package:internal_core/internal_core.dart';
+import 'package:internal_core/network/network_resources/resources.dart';
 import 'package:dio/dio.dart';
 
 import 'model/feedback_type.dart';

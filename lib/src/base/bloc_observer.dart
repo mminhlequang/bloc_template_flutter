@@ -5,19 +5,19 @@ class AppBlocObserver extends BlocObserver {
   @override
   Future<void> onEvent(Bloc bloc, Object? event) async {
     super.onEvent(bloc, event);
-    appDebugPrint('[BlocObserver] onEvent: $event');
+    print('[BlocObserver] onEvent: $event');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    appDebugPrint(
+    print(
         '[BlocObserver][Transition] ${transition.event} => ${transition.nextState}');
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    appDebugPrint('[BlocObserver] onError: $error');
+    print('[BlocObserver] onError: $error');
     super.onError(bloc, error, stackTrace);
   }
 }

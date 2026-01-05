@@ -12,7 +12,7 @@ import 'utils.dart';
 // }
 
 bool appIsBottomSheetOpen = false;
-appOpenBottomSheet(
+Future<dynamic> appOpenBottomSheet(
   Widget child, {
   bool isDismissible = true,
   bool enableDrag = true,
@@ -37,7 +37,8 @@ appOpenBottomSheet(
 }
 
 bool appIsDialogOpen = false;
-appOpenDialog(Widget child, {bool barrierDismissible = true}) async {
+Future<Object?>? appOpenDialog(Widget child,
+    {bool barrierDismissible = true}) async {
   appIsDialogOpen = true;
   var r = await showGeneralDialog(
     barrierLabel: "popup",
@@ -60,23 +61,19 @@ appOpenDialog(Widget child, {bool barrierDismissible = true}) async {
   return r;
 }
 
-appHideKeyboard() {
+void appHideKeyboard() {
   FocusManager.instance.primaryFocus?.unfocus();
 }
 
-appChangedTheme() {
+void appChangedTheme() {
   AppPrefs.instance.themeModel =
       AppPrefs.instance.isDarkTheme ? keyThemeModeLight : keyThemeModeDark;
   WidgetsBinding.instance.performReassemble();
 }
 
-appCatchLog(e) {
-  appDebugPrint('[catchLog] $e');
-}
-
 enum AppSnackBarType { error, success, notitfication }
 
-appShowSnackBar({context, required msg, Duration? duration}) {
+void appShowSnackBar({context, required msg, Duration? duration}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(
